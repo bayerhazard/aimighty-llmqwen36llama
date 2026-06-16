@@ -1,0 +1,63 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/anbeeld/beellama.cpp
+  tag: server-cuda-preview-v0.3.2
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8000
+
+resources:
+  limits:
+    cpu: 16
+    memory: 40Gi
+    nvidia.com/gpu: 1
+    nvidia.com/gpumem: 1024
+  requests:
+    cpu: 4
+    memory: 24Gi
+    nvidia.com/gpu: 1
+
+env:
+  CTX_SIZE: "200000"
+  TARGET_FILE: "Qwen3.6-27B-UD-Q4_K_XL.gguf"
+  TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q4_K_XL.gguf"
+  DRAFT_FILE: "Qwen3.6-27B-DFlash-Q4_K_M.gguf"
+  DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-Q4_K_M.gguf"
+  MODEL_ALIAS: "qwen3.6-27b-beellama"
+  THREADS: "16"
+
+runtimeClassName: nvidia
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+persistence:
+  models:
+    enabled: true
+    size: 50Gi
+  shared:
+    enabled: true
+    size: 200Gi
+
+probes:
+  startup:
+    path: /health
+    port: 8000
+    failureThreshold: 720
+    periodSeconds: 30
+    initialDelaySeconds: 60
+    timeoutSeconds: 10
+  liveness:
+    path: /health
+    port: 8000
+    failureThreshold: 5
+    periodSeconds: 30
+    initialDelaySeconds: 600
+    timeoutSeconds: 10

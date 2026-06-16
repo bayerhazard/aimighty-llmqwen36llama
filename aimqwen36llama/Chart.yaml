@@ -1,0 +1,6 @@
+apiVersion: v2
+name: aimqwen36llama
+description: Qwen3.6-27B with BeeLLama.cpp, DFlash speculative decoding, kvarn4 KV cache
+type: application
+version: 1.0.3
+appVersion: "1.0.3"

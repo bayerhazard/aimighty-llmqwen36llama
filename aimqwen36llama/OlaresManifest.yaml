@@ -1,0 +1,40 @@
+apiVersion: bytetrade.io/v1alpha1
+kind: OlaresManifest
+metadata:
+  name: aimqwen36llama
+  namespace: aimqwen36llama-aimighty
+spec:
+  appName: aimqwen36llama
+  version: 1.0.3
+  upgradeDescription: v1.0.3: BeeLLama.cpp, DFlash, kvarn4, 200k context, Qwen3.6-27B
+  title:
+    en: Qwen36 27B Long Context
+  description:
+    en: Qwen3.6-27B with BeeLLama.cpp + DFlash speculative decoding + kvarn4 KV cache
+  icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.0.3/icon.png
+  entrances:
+  - name: aimqwen36llama
+    port: 8000
+    title:
+      en: Qwen36 27B BeeLLama
+    host: aimqwen36llama
+    authLevel: internal
+    invisible: false
+    openMethod: window
+  permission:
+  - appdata-perm
+  options:
+    resources:
+      cpu: "16"
+      memory: "40Gi"
+      disk: "50Gi"
+    gpu:
+      inject: true
+      required: 1Gi
+      type: nvidia
+  env:
+  - envName: OLARES_USER_HUGGINGFACE_TOKEN
+    type: password
+    valueFrom:
+      envName: OLARES_USER_HUGGINGFACE_TOKEN
+      status: pending
