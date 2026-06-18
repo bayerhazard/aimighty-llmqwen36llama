@@ -36,9 +36,15 @@ spec:
       - name: render-envoy-config
         image: beclab/busybox:1.28
         imagePullPolicy: IfNotPresent
-        command: ["sh", "-c"]
-        args:
-        - 'while [ ! -f /var/run/secrets/kubernetes.io/serviceaccount/token ]; do sleep 0.2; done; TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); awk -v token="$TOKEN" '\''{gsub(/__SA_TOKEN__/, token); print}'\'' /work/envoy.yaml > /config/envoy.yaml; awk -v token="$TOKEN" '\''{gsub(/__SA_TOKEN__/, token); print}'\'' /work/envoy2.yaml > /config/envoy2.yaml; cat /config/envoy2.yaml'
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while [ ! -f /var/run/secrets/kubernetes.io/serviceaccount/token ]; do sleep 0.2; done
+          TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+          awk -v token="$TOKEN" '{gsub(/__SA_TOKEN__/, token); print}' /work/envoy.yaml > /config/envoy.yaml
+          awk -v token="$TOKEN" '{gsub(/__SA_TOKEN__/, token); print}' /work/envoy2.yaml > /config/envoy2.yaml
+          cat /config/envoy2.yaml
         volumeMounts:
         - mountPath: /config
           name: envoy-config
