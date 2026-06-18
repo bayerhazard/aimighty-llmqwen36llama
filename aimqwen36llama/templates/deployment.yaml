@@ -8,7 +8,6 @@ metadata:
     io.kompose.service: aimqwen36llama
     app.kubernetes.io/managed-by: Helm
   annotations:
-    applications.app.bytetrade.io/gpu-inject: "true"
 spec:
   replicas: 1
   strategy:
@@ -28,11 +27,6 @@ spec:
         image: beclab/wait-for:0.1.0
         imagePullPolicy: IfNotPresent
         args: ["-it", "authelia-backend.user-system-aimighty:9091"]
-        resources:
-          limits:
-            nvidia.com/gpu: "0"
-          requests:
-            nvidia.com/gpu: "0"
       - name: render-envoy-config
         image: beclab/busybox:1.28
         imagePullPolicy: IfNotPresent
@@ -54,11 +48,6 @@ spec:
         - mountPath: /work/envoy2.yaml
           name: olares-sidecar-config
           subPath: envoy2.yaml
-        resources:
-          limits:
-            nvidia.com/gpu: "0"
-          requests:
-            nvidia.com/gpu: "0"
       - name: olares-sidecar-init
         image: beclab/init:v1.2.3
         imagePullPolicy: IfNotPresent
@@ -217,11 +206,6 @@ spec:
         - name: liveness-port
           containerPort: 15008
           protocol: TCP
-        resources:
-          limits:
-            nvidia.com/gpu: "0"
-          requests:
-            nvidia.com/gpu: "0"
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
