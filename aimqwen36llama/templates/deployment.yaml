@@ -23,6 +23,45 @@ spec:
         io.kompose.network/chrome-default: "true"
         io.kompose.service: aimqwen36llama
     spec:
+      initContainers:
+      - name: check-auth
+        image: beclab/wait-for:0.1.0
+        imagePullPolicy: IfNotPresent
+        args: ["-it", "authelia-backend.user-system-aimighty:9091"]
+        resources:
+          limits:
+            nvidia.com/gpu: "0"
+          requests:
+            nvidia.com/gpu: "0"
+      - name: render-envoy-config
+        image: beclab/busybox:1.28
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c"]
+        args:
+        - 'while [ ! -f /var/run/secrets/kubernetes.io/serviceaccount/token ]; do sleep 0.2; done; TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token); awk -v token="$TOKEN" '\''{gsub(/__SA_TOKEN__/, token); print}'\'' /work/envoy.yaml > /config/envoy.yaml; awk -v token="$TOKEN" '\''{gsub(/__SA_TOKEN__/, token); print}'\'' /work/envoy2.yaml > /config/envoy2.yaml; cat /config/envoy2.yaml'
+        volumeMounts:
+        - mountPath: /config
+          name: envoy-config
+        - mountPath: /work/envoy.yaml
+          name: olares-sidecar-config
+          subPath: envoy.yaml
+        - mountPath: /work/envoy2.yaml
+          name: olares-sidecar-config
+          subPath: envoy2.yaml
+        resources:
+          limits:
+            nvidia.com/gpu: "0"
+          requests:
+            nvidia.com/gpu: "0"
+      - name: olares-sidecar-init
+        image: beclab/init:v1.2.3
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh"]
+        resources:
+          limits:
+            nvidia.com/gpu: "0"
+          requests:
+            nvidia.com/gpu: "0"
       containers:
       - name: aimqwen36llama
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -68,8 +107,8 @@ spec:
               --host 0.0.0.0 --port 8000 --no-host \
               -ngl all --spec-draft-ngl all \
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
-              --cache-type-k "${KV_TYPE:-kvarn5}" --cache-type-v "${KV_TYPE:-kvarn5}" \
-              --cache-ram -1 --cache-reuse 256 \
+              --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
+              --cache-ram 0 --cache-reuse 256 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --no-mmap --mlock \
@@ -127,6 +166,64 @@ spec:
           mountPath: /models
         - name: shared-models
           mountPath: /shared-models
+      - name: olares-envoy-sidecar
+        image: beclab/envoy:v1.25.11.1
+        imagePullPolicy: IfNotPresent
+        args: ["--log-level", "debug", "-c", "/config/envoy.yaml", "--service-cluster", "default."]
+        env:
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.uid
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.serviceAccountName
+        - name: APP_KEY
+        - name: APP_SECRET
+        ports:
+        - name: proxy-admin
+          containerPort: 15000
+          protocol: TCP
+        - name: proxy-inbound
+          containerPort: 15003
+          protocol: TCP
+        - name: proxy-outbound
+          containerPort: 15001
+          protocol: TCP
+        - name: liveness-port
+          containerPort: 15008
+          protocol: TCP
+        resources:
+          limits:
+            nvidia.com/gpu: "0"
+          requests:
+            nvidia.com/gpu: "0"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add: ["NET_ADMIN"]
+          runAsUser: 1555
+        volumeMounts:
+        - mountPath: /config
+          name: envoy-config
       volumes:
       - name: models
         hostPath:
@@ -136,5 +233,11 @@ spec:
         hostPath:
           path: /olares/share/ai/model
           type: DirectoryOrCreate
+      - name: envoy-config
+        emptyDir: {}
+      - name: olares-sidecar-config
+        configMap:
+          name: olares-sidecar-config-aimqwen36llama
+          defaultMode: 420
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
