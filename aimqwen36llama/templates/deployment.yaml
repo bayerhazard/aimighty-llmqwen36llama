@@ -1,36 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "aimqwen36llama.fullname" . }}
+  name: aimqwen36llama
+  namespace: {{ .Release.Namespace }}
   labels:
-    io.kompose.service: {{ include "aimqwen36llama.fullname" . }}
+    app: aimqwen36llama
+    io.kompose.service: aimqwen36llama
     app.kubernetes.io/managed-by: Helm
   annotations:
-    applications.app.bytetrade.io/entrances: '[{"name":"{{ include "aimqwen36llama.fullname" . }}","host":"{{ include "aimqwen36llama.fullname" . }}","port":8000,"icon":"https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.0.3/icon.png","title":"Qwen36 27B BeeLLama","authLevel":"internal","openMethod":"window"}]'
     applications.app.bytetrade.io/gpu-inject: "true"
-    applications.app.bytetrade.io/icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.0.3/icon.png
-    applications.app.bytetrade.io/ports: "[]"
-    applications.app.bytetrade.io/required_gpu: 1Gi
-    applications.app.bytetrade.io/source: market
-    applications.app.bytetrade.io/title: Qwen36 27B Long Context
-    applications.app.bytetrade.io/version: 1.0.3
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      io.kompose.service: {{ include "aimqwen36llama.fullname" . }}
+      io.kompose.service: aimqwen36llama
   template:
     metadata:
       labels:
-        io.kompose.service: {{ include "aimqwen36llama.fullname" . }}
-        io.bytetrade.app: "true"
-        applications.app.bytetrade.io/name: {{ include "aimqwen36llama.fullname" . }}
-        applications.app.bytetrade.io/owner: aimighty
-        applications.app.bytetrade.io/raw-app-name: {{ include "aimqwen36llama.fullname" . }}
+        app: aimqwen36llama
+        io.kompose.network/chrome-default: "true"
+        io.kompose.service: aimqwen36llama
     spec:
-      runtimeClassName: nvidia
       containers:
       - name: aimqwen36llama
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -75,13 +67,14 @@ spec:
               --spec-dflash-cross-ctx 1024 \
               --alias "$MODEL_ALIAS" \
               --host 0.0.0.0 --port 8000 --no-host \
-              -ngl 99 --spec-draft-ngl 99 \
+              -ngl all --spec-draft-ngl all \
               --ctx-size "${CTX_SIZE:-200000}" \
               --threads "${THREADS:-16}" \
-              --cache-type-k kvarn4 --cache-type-v kvarn4 \
+              --cache-type-k kvarn4 --cache-type-v kvarn4 --cache-ram 0 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
-              --flash-attn on --jinja --no-mmap --mlock --reasoning on \
+              --flash-attn on --jinja --no-mmap --mlock \
+              --reasoning on \
               --temp 0.6 --top-k 20 --min-p 0.0
         env:
         - name: HF_HOME
@@ -89,7 +82,7 @@ spec:
         - name: HF_TOKEN
           valueFrom:
             secretKeyRef:
-              name: {{ include "aimqwen36llama.fullname" . }}-env
+              name: aimqwen36llama-env
               key: OLARES_USER_HUGGINGFACE_TOKEN
               optional: true
         - name: MODELS_DIR
@@ -100,7 +93,7 @@ spec:
           value: nvidia
         envFrom:
         - configMapRef:
-            name: {{ include "aimqwen36llama.fullname" . }}-env
+            name: aimqwen36llama-env
         ports:
         - containerPort: {{ .Values.service.port }}
           protocol: TCP
@@ -138,7 +131,7 @@ spec:
       volumes:
       - name: models
         hostPath:
-          path: /olares/rootfs/userspace/pvc-userspace-aimighty-hh1h3chfhnoebc1y/Data/{{ include "aimqwen36llama.fullname" . }}/models
+          path: /olares/rootfs/userspace/pvc-userspace-aimighty-hh1h3chfhnoebc1y/Data/aimqwen36llama/models
           type: DirectoryOrCreate
       - name: shared-models
         hostPath:

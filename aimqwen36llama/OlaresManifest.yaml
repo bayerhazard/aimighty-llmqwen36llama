@@ -1,40 +1,69 @@
-apiVersion: bytetrade.io/v1alpha1
-kind: OlaresManifest
+---
+olaresManifest.version: '0.10.0'
+olaresManifest.type: app
+apiVersion: 'v2'
 metadata:
   name: aimqwen36llama
-  namespace: aimqwen36llama-aimighty
-spec:
-  appName: aimqwen36llama
-  version: 1.0.3
-  upgradeDescription: v1.0.3: BeeLLama.cpp, DFlash, kvarn4, 200k context, Qwen3.6-27B
-  title:
-    en: Qwen36 27B Long Context
-  description:
-    en: Qwen3.6-27B with BeeLLama.cpp + DFlash speculative decoding + kvarn4 KV cache
-  icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.0.3/icon.png
-  entrances:
+  icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+  description: Qwen3.6-27B with BeeLLama.cpp + DFlash speculative decoding + kvarn4 KV cache
+  appid: aimqwen36llama
+  title: AIM Qwen3.6 27B KV
+  version: '1.1.1'
+  categories:
+    - AI
+    - Developer Tools
+sharedEntrances:
+  - name: aimqwen36llama
+    host: sharedentrances-aimqwen36llama
+    port: 0
+    title: AIM Qwen3.6 27B KV
+    invisible: true
+    authLevel: internal
+    icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+entrances:
   - name: aimqwen36llama
     port: 8000
-    title:
-      en: Qwen36 27B BeeLLama
     host: aimqwen36llama
-    authLevel: internal
-    invisible: false
+    title: AIM Qwen3.6 27B KV
+    icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
     openMethod: window
-  permission:
-  - appdata-perm
-  options:
-    resources:
-      cpu: "16"
-      memory: "40Gi"
-      disk: "50Gi"
-    gpu:
-      inject: true
-      required: 1Gi
-      type: nvidia
-  env:
-  - envName: OLARES_USER_HUGGINGFACE_TOKEN
-    type: password
-    valueFrom:
-      envName: OLARES_USER_HUGGINGFACE_TOKEN
-      status: pending
+    authLevel: internal
+spec:
+  versionName: '1.1.1'
+  upgradeDescription: |
+    v1.1.1: Added `app: aimqwen36llama` label to pod template so sandbox webhook injects the envoy sidecar (fixes 502 Bad Gateway).
+    v1.1.0: Added --cache-ram 0 for stable kvarn4 KV cache management. Restored --reasoning on. Changed -ngl/spec-draft-ngl to "all". v1.0.11: Removed --reasoning on for cleaner output and more consistent generation speed. v1.0.10: Fresh base64 encoding (pod labels/annotations, deployment annotations, sharedEntrances, i18n). Renamed to AIM Qwen3.6 27B KV.
+  fullDescription: |
+    Qwen3.6-27B with BeeLLama.cpp and DFlash speculative decoding.
+
+    **Features:**
+    - Qwen3.6-27B-UD-Q4_K_XL (unsloth) — 27B parameters at Q4
+    - DFlash drafter Q4_K_M for speculative decoding (~65-80% acceptance rate)
+    - kvarn4 KV cache for efficient long-context inference
+    - 200k context window
+    - ~77 tok/s generation speed on RTX 5090
+
+    **Resource Usage:**
+    GPU: 1x NVIDIA RTX 5090 (24 GB VRAM)
+    RAM: 40 GB, CPU: 16 cores
+  developer: Aimighty
+  website: https://github.com/bayerhazard/aimighty-llmqwen36llama
+  sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
+  locale:
+    - en-US
+  supportArch:
+    - amd64
+  requiredCpu: 4
+  requiredMemory: 24Gi
+  limitedCpu: 16
+  limitedMemory: 40Gi
+  requiredDisk: 25Gi
+  requiredGpu: 1
+permission:
+  appData: true
+options:
+  dependencies:
+    - name: olares
+      version: '>=1.12.3-0'
+      type: system
+  allowMultipleInstall: false
