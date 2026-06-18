@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn5 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.2.9'
+  version: '1.3.0'
   categories:
     - AI
     - Developer Tools
@@ -29,8 +29,9 @@ entrances:
     openMethod: window
     authLevel: internal
 spec:
-  versionName: '1.2.9'
+  versionName: '1.3.0'
   upgradeDescription: |
+    v1.3.0: Self-contained chart — added ConfigMap template (aimqwen36llama-env), fixed service name (fullnameOverride bug), removed gpu-inject annotation. No manual post-install steps required.
     v1.2.9: Fix GPU validation error (requests.nvidia.com/gpu: 0 != limit). Removed gpu-inject annotation + GPU resources from sidecar/init containers.
     v1.2.8: Fix YAML parse error in render-envoy-config args (single-quote escaping).
     v1.2.7: Fix corrupt chart base64 (flate: corrupt). Self-contained chart with envoy sidecar (no sandbox-webhook), KVarN4 KV, --cache-ram 0, sidecar ConfigMap in chart.

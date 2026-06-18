@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: aimqwen36llama
 
 service:
   type: ClusterIP
