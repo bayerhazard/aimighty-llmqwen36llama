@@ -40,12 +40,6 @@ spec:
       title: AIM Qwen3.6 27B KV
       openMethod: window
       authLevel: internal
-      title:
-        en: Qwen36 27B BeeLLama
-      host: aimqwen36llama
-      authLevel: internal
-      invisible: false
-      openMethod: window
   env:
     - envName: TZ
       type: string
