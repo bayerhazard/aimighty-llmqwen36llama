@@ -75,7 +75,8 @@ spec:
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --no-mmap --mlock \
               --reasoning on \
-              --temp 0.6 --top-k 20 --min-p 0.0
+              --chat-template-kwargs '{"preserve_thinking":true}' \
+              --temp 0.6 --top-k 20 --top-p 1.0 --min-p 0.0
         env:
         - name: HF_HOME
           value: /models/huggingface
