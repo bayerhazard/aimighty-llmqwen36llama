@@ -102,8 +102,8 @@ spec:
               --host 0.0.0.0 --port 8000 --no-host \
               -ngl all --spec-draft-ngl all \
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
-              --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
-              --cache-ram 0 --cache-reuse 256 \
+              --cache-type-k "${KV_TYPE:-kvarn5}" --cache-type-v "${KV_TYPE:-kvarn5}" \
+              --cache-ram -1 --cache-reuse 256 \
               --ctx-checkpoints 12 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \

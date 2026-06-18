@@ -5,8 +5,8 @@ metadata:
   namespace: aimqwen36llama-aimighty
 spec:
   appName: aimqwen36llama
-  version: 1.3.0
-  upgradeDescription: 'v1.3.0: Self-contained chart — added ConfigMap template (aimqwen36llama-env), fixed service name (fullnameOverride bug), removed gpu-inject annotation. No manual post-install steps required. v1.2.9: Fix GPU validation error (requests.nvidia.com/gpu: 0 != limit). v1.2.8: Fix YAML parse error in render-envoy-config args. Self-contained chart with envoy sidecar, KVarN4 KV, --cache-ram 0, sidecar ConfigMap in chart. v1.2.6: Self-contained chart with sidecar, KVarN4, cache-ram 0. v1.2.2: Gold-Standard config with manual sidecar injection. v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context'
+  version: 1.3.1
+  upgradeDescription: 'v1.3.1: Fix --cache-ram 0 → -1 (prompt cache war deaktiviert) und KV-Type default kvarn4 → kvarn5. v1.3.0: Self-contained chart — added ConfigMap template (aimqwen36llama-env), fixed service name (fullnameOverride bug), removed gpu-inject annotation. No manual post-install steps required. v1.2.9: Fix GPU validation error (requests.nvidia.com/gpu: 0 != limit). v1.2.8: Fix YAML parse error in render-envoy-config args. Self-contained chart with envoy sidecar, KVarN4 KV, --cache-ram 0, sidecar ConfigMap in chart. v1.2.6: Self-contained chart with sidecar, KVarN4, cache-ram 0. v1.2.2: Gold-Standard config with manual sidecar injection. v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context'
   title:
     en: Qwen36 27B Long Context
   description:
