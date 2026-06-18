@@ -104,7 +104,6 @@ spec:
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
               --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
               --cache-ram 0 --cache-reuse 256 \
-              --checkpoint-max 16 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --no-mmap --mlock \
