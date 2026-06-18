@@ -5,13 +5,13 @@ metadata:
   namespace: aimqwen36llama-aimighty
 spec:
   appName: aimqwen36llama
-  version: 1.0.3
-  upgradeDescription: v1.0.3: BeeLLama.cpp, DFlash, kvarn4, 200k context, Qwen3.6-27B
+  version: 1.2.0
+  upgradeDescription: v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context
   title:
     en: Qwen36 27B Long Context
   description:
-    en: Qwen3.6-27B with BeeLLama.cpp + DFlash speculative decoding + kvarn4 KV cache
-  icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.0.3/icon.png
+    en: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn5 KV + prompt cache — optimized for coding & agentic workflows
+  icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.2.0/icon.png
   categories:
     - AI
     - Developer Tools
@@ -36,6 +36,10 @@ spec:
   entrances:
     - name: aimqwen36llama
       port: 8000
+      host: aimqwen36llama
+      title: AIM Qwen3.6 27B KV
+      openMethod: window
+      authLevel: internal
       title:
         en: Qwen36 27B BeeLLama
       host: aimqwen36llama
