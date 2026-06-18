@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn5 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.2.6'
+  version: '1.2.7'
   categories:
     - AI
     - Developer Tools
@@ -29,9 +29,10 @@ entrances:
     openMethod: window
     authLevel: internal
 spec:
-  versionName: '1.2.6'
+  versionName: '1.2.7'
   upgradeDescription: |
-    v1.2.6: Self-contained chart with envoy sidecar (no sandbox-webhook dependency), KVarN4 KV cache (stable VRAM at 200k), --cache-ram 0 (no RAM overflow), nvidia.com/gpu:0 on sidecar/init (fixes HAMI double-count), sidecar ConfigMap in chart.
+    v1.2.7: Fix corrupt chart in v1.2.6 (flate: corrupt input in base64). Same content: self-contained chart with envoy sidecar (no sandbox-webhook dependency), KVarN4 KV cache (stable VRAM at 200k), --cache-ram 0 (no RAM overflow), nvidia.com/gpu:0 on sidecar/init (fixes HAMI double-count), sidecar ConfigMap in chart.
+    v1.2.6: Self-contained chart with envoy sidecar, KVarN4, cache-ram 0.
     v1.2.2: Gold-Standard config with manual sidecar injection.
     v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter (934 MB, faster+smaller), kvarn5 KV cache (5-bit, +quality), prompt-cache enabled (cache-ram -1, cache-reuse 256), top-p 0.95 (Qwen Coding recommendation), -ngl all, spec-dflash-cross-ctx 1024. ~103 t/s decode on RTX 5090.
     v1.1.2: Added --top-p 1.0 and --chat-template-kwargs '{\"preserve_thinking\":true}' (BeeLlama recommended defaults for quality). Keep cache-ram 0, kvarn4 KV cache, 200k context.
