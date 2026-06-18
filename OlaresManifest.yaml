@@ -5,13 +5,13 @@ metadata:
   namespace: aimqwen36llama-aimighty
 spec:
   appName: aimqwen36llama
-  version: 1.2.0
-  upgradeDescription: v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context
+  version: 1.2.1
+  upgradeDescription: 'v1.2.1: Force Olares re-sync — apply Gold-Standard config (cache-ram -1, kvarn5, cache-reuse 256) from existing v1.2.0 chart that was never actually deployed. v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context'
   title:
     en: Qwen36 27B Long Context
   description:
     en: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn5 KV + prompt cache — optimized for coding & agentic workflows
-  icon: https://github.com/bayerhazard/aimighty-llmqwen36llama/releases/download/v1.2.0/icon.png
+  icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
   categories:
     - AI
     - Developer Tools
