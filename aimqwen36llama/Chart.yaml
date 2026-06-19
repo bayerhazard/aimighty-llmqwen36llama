@@ -2,5 +2,5 @@ apiVersion: v2
 name: aimqwen36llama
 description: Qwen3.6-27B with BeeLLama.cpp, DFlash IQ4_XS, kvarn4 KV, prompt cache — coding/agentic optimized
 type: application
-version: 1.3.2
-appVersion: "1.3.2"
+version: 1.3.3
+appVersion: "1.3.3"
