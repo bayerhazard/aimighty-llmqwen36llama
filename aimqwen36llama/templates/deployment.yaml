@@ -103,12 +103,17 @@ spec:
               -ngl all --spec-draft-ngl all \
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
               --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
-              --cache-ram -1 \
-              --ctx-checkpoints 3 \
+              --cache-ram 0 \
+              --ctx-checkpoints 8 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --no-mmap --mlock \
               --reasoning on \
+              --reasoning-loop-guard force-close \
+              --reasoning-loop-min-tokens 512 \
+              --reasoning-loop-window 1024 \
+              --reasoning-loop-max-period 256 \
+              --reasoning-loop-min-coverage 384 \
               --temp 0.6 --top-k 20 --top-p 0.95 --min-p 0.0
         env:
         - name: HF_HOME

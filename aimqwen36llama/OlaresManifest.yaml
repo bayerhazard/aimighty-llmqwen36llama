@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn4 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.3.3'
+  version: '1.3.4'
   categories:
     - AI
     - Developer Tools
@@ -29,8 +29,9 @@ entrances:
     openMethod: window
     authLevel: internal
 spec:
-  versionName: '1.3.3'
+  versionName: '1.3.4'
   upgradeDescription: |
+    v1.3.4: --cache-ram -1 → 0 (prompt cache deaktiviert), --ctx-checkpoints 3 → 8, reasoning-loop-guard force-close + 4 Loop-Parameter (min-tokens 512, window 1024, max-period 256, min-coverage 384).
     v1.3.3: --ctx-checkpoints 12 → 3 (weniger RAM für Checkpoints, ~250 MiB/Checkpoint gespart) und --cache-reuse 256 entfernt.
     v1.3.2: Switch kvarn5 → kvarn4 (KV cache 5→4 bit) für VRAM-Reserve bei 200k Kontext. Fix OOMKilled nach 187k Token Request.
     v1.3.1: Fix --cache-ram 0 → -1 (prompt cache war deaktiviert) und KV-Type default kvarn4 → kvarn5.
