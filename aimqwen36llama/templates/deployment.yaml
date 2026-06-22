@@ -103,7 +103,7 @@ spec:
               -ngl all --spec-draft-ngl all \
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
               --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
-              --cache-ram 0 \
+              --cache-ram -1 \
               --ctx-checkpoints 8 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
