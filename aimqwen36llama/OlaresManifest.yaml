@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn4 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.3.6'
+  version: '1.3.7'
   categories:
     - AI
     - Developer Tools
