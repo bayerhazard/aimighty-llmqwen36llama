@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.fullnameOverride }}-chat-template
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.fullnameOverride }}
+    app.kubernetes.io/managed-by: Helm
+data:
+  qwen36_chat_template.jinja: |
+{{ .Files.Get "files/qwen36_chat_template.jinja" | indent 4 }}

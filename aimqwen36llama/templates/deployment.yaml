@@ -107,7 +107,7 @@ spec:
               --ctx-checkpoints 8 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
-              --flash-attn on --jinja --no-mmap --mlock \
+              --flash-attn on --jinja --chat-template-file /chat-template/qwen36_chat_template.jinja --no-mmap --mlock \
               --reasoning on \
               --reasoning-loop-guard force-close \
               --reasoning-loop-min-tokens 512 \
@@ -167,6 +167,9 @@ spec:
           mountPath: /models
         - name: shared-models
           mountPath: /shared-models
+        - name: chat-template
+          mountPath: /chat-template
+          readOnly: true
       - name: olares-envoy-sidecar
         image: beclab/envoy:v1.25.11.1
         imagePullPolicy: IfNotPresent
@@ -234,6 +237,10 @@ spec:
       - name: olares-sidecar-config
         configMap:
           name: olares-sidecar-config-aimqwen36llama
+          defaultMode: 420
+      - name: chat-template
+        configMap:
+          name: {{ .Values.fullnameOverride }}-chat-template
           defaultMode: 420
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
