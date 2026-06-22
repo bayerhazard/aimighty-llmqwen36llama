@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn4 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.3.7'
+  version: '1.5.0'
   categories:
     - AI
     - Developer Tools
@@ -29,9 +29,9 @@ entrances:
     openMethod: window
     authLevel: internal
 spec:
-versionName: '1.3.7'
+versionName: '1.5.0'
 upgradeDescription: |
-  v1.3.7: Fix --cache-ram -1 (prompt cache reaktiviert) — war durch v1.3.4 auf 0 zurückgesetzt.
+  v1.5.0: Chat-Template Fix + --cache-ram 0 (stabilisiert) (prompt cache reaktiviert) — war durch v1.3.4 auf 0 zurückgesetzt.
     v1.3.5: Fresh base64 encoding — neu gebaut für v1.3.5 (gleicher Inhalt wie v1.3.4).
     v1.3.4: --cache-ram -1 → 0 (prompt cache deaktiviert), --ctx-checkpoints 3 → 8, reasoning-loop-guard force-close + 4 Loop-Parameter (min-tokens 512, window 1024, max-period 256, min-coverage 384).
     v1.3.3: --ctx-checkpoints 12 → 3 (weniger RAM für Checkpoints, ~250 MiB/Checkpoint gespart) und --cache-reuse 256 entfernt.
