@@ -5,10 +5,10 @@ metadata:
   namespace: aimqwen36llama-aimighty
 spec:
   appName: aimqwen36llama
-  version: 1.6.7
+  version: 1.6.8
   upgradeDescription: 'v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches (Q1: preserve_thinking=true, Q2: developer role, Q3: string args error, Q4: robust thinking tags, Q5: tool envelope unwrap, Q6: verbose instructions) — Chart refactored: template via files/ + .Files.Get. v1.5.0: Chat-Template Fix + --cache-ram 0 (stabilisiert) (prompt cache reaktiviert) — war durch v1.3.4 auf 0 zurückgesetzt. v1.3.5: Fresh base64 encoding. v1.3.4: --cache-ram -1 → 0 (prompt cache aus), --ctx-checkpoints 3 → 8, reasoning-loop-guard force-close + 4 Loop-Parameter. v1.3.3: --ctx-checkpoints 12 → 3 (weniger RAM für Checkpoints) und --cache-reuse 256 entfernt. v1.3.2: Switch kvarn5 → kvarn4 (KV cache 5→4 bit) für VRAM-Reserve bei 200k Kontext. Fix OOMKilled nach 187k Token Request. v1.3.1: Fix --cache-ram 0 → -1 (prompt cache war deaktiviert) und KV-Type default kvarn4 → kvarn5. v1.3.0: Self-contained chart — added ConfigMap template (aimqwen36llama-env), fixed service name (fullnameOverride bug), removed gpu-inject annotation. No manual post-install steps required. v1.2.9: Fix GPU validation error (requests.nvidia.com/gpu: 0 != limit). v1.2.8: Fix YAML parse error in render-envoy-config args. Self-contained chart with envoy sidecar, KVarN4 KV, --cache-ram 0, sidecar ConfigMap in chart. v1.2.6: Self-contained chart with sidecar, KVarN4, cache-ram 0. v1.2.2: Gold-Standard config with manual sidecar injection. v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (cache-ram -1), top-p 0.95, 200k context'
   title:
-    en: Qwen36 27B Long Context
+    en: Qwen3.6 27B
   description:
     en: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn5 KV + prompt cache — optimized for coding & agentic workflows
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
@@ -38,7 +38,7 @@ spec:
     - name: aimqwen36llama
       port: 8000
       host: aimqwen36llama
-      title: AIM Qwen36-27B KV
+      title: Qwen3.6 27B
       openMethod: window
       authLevel: internal
   env:
