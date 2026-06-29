@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn4 KV + prompt cache — coding/agentic optimized
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B KV
-  version: '1.6.0'
+  version: '1.6.4'
   categories:
     - AI
     - Developer Tools
@@ -34,9 +34,9 @@ spec:
   requiredMemory: 24Gi
   limitedMemory: 40Gi
   requiredDisk: 25Gi
-versionName: '1.6.0'
+versionName: '1.6.4'
 upgradeDescription: |
-  v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
+  v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
   fullDescription: |
     Qwen3.6-27B with BeeLLama.cpp, DFlash speculative decoding, and prompt cache — optimized for coding & agentic workflows.
 

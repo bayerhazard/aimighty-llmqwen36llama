@@ -8,4 +8,4 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 data:
   qwen36_chat_template.jinja: |
-    {{- .Files.Get "qwen36_chat_template.jinja" | nindent 4 }}
+{{ .Values.chatTemplate | indent 4 }}
