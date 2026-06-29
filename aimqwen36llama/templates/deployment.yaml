@@ -94,6 +94,7 @@ spec:
               touch "$SHARED_DIR/$DRAFT_FILE.ok"
             fi
             cd /app
+            base64 -d /chat-template/chat_template.b64 > /tmp/chat-template.jinja
             exec ./llama-server \
               --model "$SHARED_DIR/$TARGET_FILE" \
               --spec-draft-model "$SHARED_DIR/$DRAFT_FILE" \
@@ -107,7 +108,7 @@ spec:
               --ctx-checkpoints 8 \
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
-              --flash-attn on --jinja --chat-template-file /chat-template/qwen36_chat_template.jinja --no-mmap --mlock \
+              --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
               --reasoning on \
               --reasoning-loop-guard force-close \
               --reasoning-loop-min-tokens 512 \

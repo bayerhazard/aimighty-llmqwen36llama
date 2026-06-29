@@ -7,5 +7,5 @@ metadata:
     app: {{ .Values.fullnameOverride }}
     app.kubernetes.io/managed-by: Helm
 data:
-  qwen36_chat_template.jinja: |
-{{ .Values.chatTemplate | indent 4 }}
+  chat_template.b64: |
+{{ .Values.chatTemplateB64 | indent 4 }}
