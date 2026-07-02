@@ -31,7 +31,7 @@ env:
   DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-IQ4_XS.gguf"
   KV_TYPE: "kvarn4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
-  THREADS: "16"
+  THREADS: "12"
 
 runtimeClassName: nvidia
 
