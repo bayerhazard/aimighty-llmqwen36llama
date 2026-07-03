@@ -110,7 +110,7 @@ spec:
               --batch-size 2048 -ub 512 \
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
-              --reasoning on \
+              --reasoning off \
               --reasoning-budget 512 \
               --reasoning-budget-message "Think done. Answer now." \
               --reasoning-loop-guard force-close \
