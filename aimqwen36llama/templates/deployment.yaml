@@ -111,7 +111,7 @@ spec:
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
               --reasoning on \
-              --reasoning-budget 1024 \
+              --reasoning-budget 512 \
               --reasoning-budget-message "Think done. Answer now." \
               --reasoning-loop-guard force-close \
               --reasoning-loop-min-tokens 256 \
