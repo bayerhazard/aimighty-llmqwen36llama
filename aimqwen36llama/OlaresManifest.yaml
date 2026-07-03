@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '1.7.6'
+  version: '1.8.0'
   categories:
     - AI
     - Developer Tools
@@ -34,7 +34,7 @@ spec:
   requiredMemory: 24Gi
   limitedMemory: 40Gi
   requiredDisk: 25Gi
-versionName: '1.7.6'
+versionName: '1.8.0'
 upgradeDescription: |
   v1.7.6: --reasoning off → on zurück (Qualität). Subagenten nutzen Gemma statt Qwen für Tool-Calls (via OpenCode Config). v1.7.5: (übersprungen). v1.7.4: Reasoning-Budget 1024 → 512. v1.7.3: Fix --reasoning-loop-min-coverage 384 → 256 (gleicher Wert wie loop-min-tokens, behebt CrashLoop). v1.7.2: Updated store description (Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV). v1.7.1: Reasoning-Budget 4096 → 1024, Reasoning-Loop-Min-Tokens 512 → 256 (reduziert Reasoning-Overhead bei Tool-Calling). v1.7.0: Prompt-Cache reaktiviert (--cache-ram -1, --cache-reuse 256), temp 0.3 → 0.6, ctx-checkpoints 8 → 4, threads 16 (hardcodiert). v1.6.9: Renamed to AIM Qwen3.6 27B Beellama. Parameter-Optimierung: temp 0.6 → 0.3, Reasoning-Budget 4096 gesetzt, Threads 16 → 12. v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
   fullDescription: |
