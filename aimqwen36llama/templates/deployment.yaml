@@ -111,10 +111,10 @@ spec:
               --parallel 1 --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
               --reasoning on \
-              --reasoning-budget 4096 \
+              --reasoning-budget 1024 \
               --reasoning-budget-message "Think done. Answer now." \
               --reasoning-loop-guard force-close \
-              --reasoning-loop-min-tokens 512 \
+              --reasoning-loop-min-tokens 256 \
               --reasoning-loop-window 1024 \
               --reasoning-loop-max-period 256 \
               --reasoning-loop-min-coverage 384 \
