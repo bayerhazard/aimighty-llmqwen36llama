@@ -5,10 +5,10 @@ apiVersion: 'v2'
 metadata:
   name: aimqwen36llama
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
-  description: Qwen3.6-27B with BeeLLama.cpp + DFlash IQ4_XS + kvarn4 KV + prompt cache (--cache-ram -1, --cache-reuse 256) — coding/agentic optimized
+  description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '1.7.1'
+  version: '1.7.2'
   categories:
     - AI
     - Developer Tools
@@ -34,25 +34,22 @@ spec:
   requiredMemory: 24Gi
   limitedMemory: 40Gi
   requiredDisk: 25Gi
-versionName: '1.7.1'
+versionName: '1.7.2'
 upgradeDescription: |
-  v1.7.1: Reasoning-Budget 4096 → 1024, Reasoning-Loop-Min-Tokens 512 → 256 (reduziert Reasoning-Overhead bei Tool-Calling). v1.7.0: Prompt-Cache reaktiviert (--cache-ram -1, --cache-reuse 256), temp 0.3 → 0.6, ctx-checkpoints 8 → 4, threads 16 (hardcodiert). v1.6.9: Renamed to AIM Qwen3.6 27B Beellama. Parameter-Optimierung: temp 0.6 → 0.3, Reasoning-Budget 4096 gesetzt, Threads 16 → 12. v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
+  v1.7.2: Updated store description (Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV). v1.7.1: Reasoning-Budget 4096 → 1024, Reasoning-Loop-Min-Tokens 512 → 256 (reduziert Reasoning-Overhead bei Tool-Calling). v1.7.0: Prompt-Cache reaktiviert (--cache-ram -1, --cache-reuse 256), temp 0.3 → 0.6, ctx-checkpoints 8 → 4, threads 16 (hardcodiert). v1.6.9: Renamed to AIM Qwen3.6 27B Beellama. Parameter-Optimierung: temp 0.6 → 0.3, Reasoning-Budget 4096 gesetzt, Threads 16 → 12. v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
   fullDescription: |
-    Qwen3.6-27B with BeeLLama.cpp, DFlash speculative decoding, and prompt cache — optimized for coding & agentic workflows.
+    Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
 
-    **Features:**
-    - Qwen3.6-27B-UD-Q4_K_XL (unsloth) — 27B parameters at Q4
-    - DFlash drafter IQ4_XS for speculative decoding (934 MB, 33-37% acceptance, faster than MTP)
+    Optimized for coding and agentic workflows on Olares One.
+
+    Features:
+    - beellama.cpp-server-cuda-preview-v0.3.2
+    - Unsloth Qwen3.6-27-UD-Q4_K_XL
+    - DFlash speculative decoding with IQ4_XS drafter
     - kvarn4 KV cache (4-bit, ~17 KB/token)
-    - Reasoning-Budget 4096 — verhindert overthinking bei Coding-Tasks
-    - temp 0.6 — Qwen Coding-Empfehlung
-    - Prompt cache enabled (--cache-ram -1, --cache-reuse 256, --ctx-checkpoints 4) — Multi-Turn Effizienz
-    - 200k context window
-    - ~99 tok/s decode speed on RTX 5090
-
-    **Resource Usage:**
-    GPU: 1x NVIDIA RTX 5090 (24 GB VRAM)
-    RAM: 40 GB, CPU: 16 cores
+    - 200K token context with prompt cache
+    - space-invaders 110 t/s, creative-poem 65.6 t/s
+    - OpenAI-compatible API at port 8000
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen36llama
   sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
