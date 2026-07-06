@@ -15,3 +15,5 @@ data:
   KV_TYPE: "{{ .Values.env.KV_TYPE }}"
   MODEL_ALIAS: "{{ .Values.env.MODEL_ALIAS }}"
   THREADS: "{{ .Values.env.THREADS }}"
+  PARALLEL: "{{ .Values.env.PARALLEL }}"
+  CACHE_RAM: "{{ .Values.env.CACHE_RAM }}"
