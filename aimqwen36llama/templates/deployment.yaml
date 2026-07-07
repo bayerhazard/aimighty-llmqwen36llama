@@ -26,7 +26,7 @@ spec:
       - name: check-auth
         image: beclab/wait-for:0.1.0
         imagePullPolicy: IfNotPresent
-        args: ["-it", "authelia-backend.user-system-aimighty:9091"]
+        args: ["-t", "120", "authelia-backend.user-system-aimighty:9091"]
       - name: render-envoy-config
         image: beclab/busybox:1.28
         imagePullPolicy: IfNotPresent
@@ -130,8 +130,6 @@ spec:
               optional: true
         - name: MODELS_DIR
           value: /models
-        - name: CUDA_DEVICE_MEMORY_LIMIT_0
-          value: "30000m"
         - name: GPU_TYPE
           value: nvidia
         envFrom:
@@ -145,7 +143,6 @@ spec:
             cpu: {{ .Values.resources.limits.cpu }}
             memory: {{ .Values.resources.limits.memory }}
             nvidia.com/gpu: {{ index .Values.resources.limits "nvidia.com/gpu" }}
-            nvidia.com/gpumem: {{ index .Values.resources.limits "nvidia.com/gpumem" }}
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
