@@ -26,7 +26,8 @@ spec:
       - name: check-auth
         image: beclab/wait-for:0.1.0
         imagePullPolicy: IfNotPresent
-        args: ["-it", "120", "authelia-backend.user-system-aimighty:9091"]
+        command: ["true"]
+        args: ["-it", "authelia-backend.user-system-aimighty:9091"]
       - name: render-envoy-config
         image: beclab/busybox:1.28
         imagePullPolicy: IfNotPresent
