@@ -31,8 +31,8 @@ env:
   KV_TYPE: "kvarn4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
   THREADS: "12"
-  PARALLEL: "2"
-  CACHE_RAM: "2048"
+  PARALLEL: "1"
+  CACHE_RAM: "0"
 
 runtimeClassName: nvidia
 
