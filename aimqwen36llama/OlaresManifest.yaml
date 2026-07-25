@@ -8,7 +8,7 @@ metadata:
   description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '2.4.3'
+  version: '2.4.4'
   categories:
     - AI
     - Developer Tools
