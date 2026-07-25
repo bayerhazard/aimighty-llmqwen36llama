@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
 spec:
-  replicas: 1
+  replicas: {{ .Values.workloads.aimqwen36llama.replicaCount }}
   strategy:
     type: Recreate
   selector:
@@ -99,7 +99,7 @@ spec:
             exec ./llama-server \
               --model "$SHARED_DIR/$TARGET_FILE" \
               --spec-draft-model "$SHARED_DIR/$DRAFT_FILE" \
-              --spec-type dflash --spec-dflash-cross-ctx 1024 \
+              --spec-type draft-dflash \
               --alias "$MODEL_ALIAS" \
               --host 0.0.0.0 --port 8000 --no-host \
               -ngl all --spec-draft-ngl all \
@@ -124,11 +124,7 @@ spec:
         - name: HF_HOME
           value: /models/huggingface
         - name: HF_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: aimqwen36llama-env
-              key: OLARES_USER_HUGGINGFACE_TOKEN
-              optional: true
+          value: {{ .Values.olaresEnv.HF_TOKEN | default "" | quote }}
         - name: MODELS_DIR
           value: /models
         - name: GPU_TYPE

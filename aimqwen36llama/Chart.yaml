@@ -1,6 +1,6 @@
 apiVersion: v2
 name: aimqwen36llama
-description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
+description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash Q4_K_M - kvarn4 KV
 type: application
-version: 2.4.6
-appVersion: "2.4.0"
+version: 2.5.0
+appVersion: "2.5.0"

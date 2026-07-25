@@ -1,52 +1,74 @@
-apiVersion: bytetrade.io/v1alpha1
-kind: OlaresManifest
+olaresManifest.version: '0.12.0'
+olaresManifest.type: app
+apiVersion: 'v3'
+
+workloadReplicas:
+  aimqwen36llama: 1
+
 metadata:
   name: aimqwen36llama
-  namespace: aimqwen36llama-aimighty
-spec:
-  appName: aimqwen36llama
-  version: 2.3.0
-  upgradeDescription: 'v2.3.0: Fix Olares Webhook compat — check-auth uses command:["true"] so webhook patch harmless. v2.2.9: Remove check-auth init container. v2.2.7: (skipped — version conflict). v2.2.6: Fix HAMi compat — removed nvidia.com/gpumem, check-auth args -it→-t 120. v2.2.5: --parallel 2 + --cache-ram 2048 (ConfigMap-variabel). Benchmark: 101 tok/s coding, 60 tok/s poetry, Parallel-Stress 1.46x, Needle 96%, Agentic 100%. 'v2.0.0: Cleanup - removed reasoning-budget-message, min-tokens 256→512, removed unused coder model. v1.7.6: --reasoning off → on zurück (Qualität). Subagenten nutzen Gemma statt Qwen für Tool-Calls. v1.7.5: (übersprungen). v1.7.4: Reasoning-Budget 1024 → 512. v1.7.3: Fix --reasoning-loop-min-coverage 384 → 256 (gleicher Wert wie loop-min-tokens, behebt CrashLoop). v1.7.2: Updated store description (Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV). v1.7.1: Reasoning-Budget 4096 → 1024, Reasoning-Loop-Min-Tokens 512 → 256, OpenCode output limit 2048 → 8192 (fixes SchemaError Missing content bei Tool-Calls). v1.7.0: Prompt-Cache reaktiviert (--cache-ram -1, --cache-reuse 256), temp 0.3 → 0.6, ctx-checkpoints 8 → 4, threads 16 (hardcodiert). v1.6.9: Renamed to AIM Qwen3.6 27B Beellama. Parameter-Optimierung: temp 0.6 → 0.3, Reasoning-Budget 4096 gesetzt, Threads 16 → 12. v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true, Q2: developer role, Q3: string args error, Q4: robust thinking tags, Q5: tool envelope unwrap, Q6: verbose instructions — Chart refactored: template via files/ + .Files.Get. v1.5.0: Chat-Template Fix + --cache-ram 0 (stabilisiert) (prompt cache reaktiviert) — war durch v1.3.4 auf 0 zurückgesetzt. v1.3.5: Fresh base64 encoding. v1.3.4: --cache-ram -1 → 0 (prompt cache aus), --ctx-checkpoints 3 → 8, reasoning-loop-guard force-close + 4 Loop-Parameter. v1.3.3: --ctx-checkpoints 12 → 3 (weniger RAM für Checkpoints) und --cache-reuse 256 entfernt. v1.3.2: Switch kvarn5 → kvarn4 (KV cache 5→4 bit) für VRAM-Reserve bei 200k Kontext. Fix OOMKilled nach 187k Token Request. v1.3.1: Fix --cache-ram 0 → -1 (prompt cache war deaktiviert) und KV-Type default kvarn4 → kvarn5. v1.3.0: Self-contained chart — added ConfigMap template (aimqwen36llama-env), fixed service name (fullnameOverride bug), removed gpu-inject annotation. No manual post-install steps required. v1.2.9: Fix GPU validation error (requests.nvidia.com/gpu: 0 != limit). v1.2.8: Fix YAML parse error in render-envoy-config args. Self-contained chart with envoy sidecar, KVarN4 KV, --cache-ram 0, sidecar ConfigMap in chart. v1.2.6: Self-contained chart with sidecar, KVarN4, cache-ram 0. v1.2.2: Gold-Standard config with manual sidecar injection. v1.2.0: Coding/Agentic Gold-Standard — DFlash IQ4_XS drafter, kvarn5 KV, prompt-cache (ca...
-  title:
-    en: Qwen3.6 27B
-  description:
-    en: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+  description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash Q4_K_M - kvarn4 KV
+  appid: aimqwen36llama
+  title: AIM Qwen3.6 27B Beellama
+  version: '2.5.0'
   categories:
-    - LLM Chat
+    - AI
+    - Developer Tools
+
+entrances:
+  - name: aimqwen36llama
+    port: 8000
+    host: aimqwen36llama
+    title: AIM Qwen3.6 27B Beellama
+    icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+    openMethod: window
+    authLevel: internal
+
+spec:
+  versionName: '2.5.0'
+  fullDescription: |
+    Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash Q4_K_M - kvarn4 KV
+
+    Optimized for coding and agentic workflows on Olares One.
+
+    Features:
+    - beellama.cpp server-cuda-preview-v0.4.1 (upstream draft-dflash)
+    - Unsloth Qwen3.6-27B UD-Q4_K_XL (17.6 GB)
+    - DFlash speculative decoding with Q4_K_M drafter (1 GB)
+    - kvarn4 KV cache (4-bit, ~17 KB/token)
+    - 200K token context with prompt cache
+    - parallel 2 (2x throughput)
+    - OpenAI-compatible API at port 8000
+  upgradeDescription: |
+    v2.5.0: Fix beellama v0.4.x compat — --spec-type draft-dflash, fork-private --spec-dflash-cross-ctx entfernt (in v0.4.0 abgeschafft, verursachte CrashLoop). Fix OlaresManifest v3 Struktur — fullDescription/versionName/developer unter spec: (waren versehentlich Teil des upgradeDescription-Blockskalars). Fix values.yaml olaresEnv Default (helm nil pointer). DFlash-Drafter IQ4_XS → Q4_K_M. apiTimeout 3600. v2.4.0: beellama.cpp v0.3.2 → v0.4.1 (native KVarN + DFlash CUDA kernels). HAMi GPU fix — runtimeClassName: nvidia entfernt. Threads 16, cache-ram -1 (Prompt-Cache an), parallel 1→2 (2x Throughput). v2.3.3: Revert parallel 2→1, cache-ram 2048→0 (OOM-Risiko). v2.3.0: check-auth command:["true"] (Webhook compat). v1.7.x: Reasoning-Parameter-Serie. v1.7.0: Prompt-Cache reaktiviert, temp 0.6, threads 16. v1.6.x: chartrepo compat (inline base64 chat template). v1.3.x: kvarn4 KV, OOM-Fixes, self-contained chart. v1.2.x: Sidecar im Chart, GPU validation fix.
   developer: Aimighty
-  supportArch:
-    - amd64
+  website: https://github.com/bayerhazard/aimighty-llmqwen36llama
+  sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
   requiredCpu: "4"
   limitedCpu: "16"
-  requiredMemory: "24Gi"
-  limitedMemory: "40Gi"
-  requiredDisk: "25Gi"
-  requiredGpu: "1Gi"
-  permission:
-    - appdata-perm
-  options:
-    resources:
-      cpu: "16"
-      memory: "40Gi"
-      disk: "50Gi"
-    gpu:
-      inject: true
-      required: 1Gi
-      type: nvidia
-  entrances:
-    - name: aimqwen36llama
-      port: 8000
-      host: aimqwen36llama
-      title: Qwen3.6 27B
-      openMethod: window
-      authLevel: internal
-  env:
-    - envName: TZ
-      type: string
-      default: "Etc/UTC"
-    - envName: OLARES_USER_HUGGINGFACE_TOKEN
-      type: password
-      valueFrom:
-        envName: OLARES_USER_HUGGINGFACE_TOKEN
-        status: pending
+  requiredMemory: 24Gi
+  limitedMemory: 40Gi
+  requiredDisk: 25Gi
+  limitedDisk: 50Gi
+  requiredGpu: 1
+  supportArch:
+    - amd64
+
+permission:
+  appData: true
+
+envs:
+  - envName: HF_TOKEN
+    required: false
+    applyOnChange: true
+    valueFrom:
+      envName: OLARES_USER_HUGGINGFACE_TOKEN
+
+options:
+  apiTimeout: 3600
+  allowMultipleInstall: false
+  dependencies:
+    - name: olares
+      version: '>=1.12.6-0'
+      type: system

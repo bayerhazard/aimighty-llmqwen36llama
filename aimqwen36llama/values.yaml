@@ -1,5 +1,9 @@
 replicaCount: 1
 
+workloads:
+  aimqwen36llama:
+    replicaCount: 1
+
 image:
   repository: ghcr.io/anbeeld/beellama.cpp
   tag: server-cuda-preview-v0.4.1
@@ -26,13 +30,19 @@ env:
   CTX_SIZE: "200000"
   TARGET_FILE: "Qwen3.6-27B-UD-Q4_K_XL.gguf"
   TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q4_K_XL.gguf"
-  DRAFT_FILE: "Qwen3.6-27B-DFlash-IQ4_XS.gguf"
-  DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-IQ4_XS.gguf"
+  DRAFT_FILE: "Qwen3.6-27B-DFlash-Q4_K_M.gguf"
+  DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-Q4_K_M.gguf"
   KV_TYPE: "kvarn4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
   THREADS: "16"
   PARALLEL: "2"
   CACHE_RAM: "-1"
+
+# Olares-injected environment variables (from OlaresManifest envs:).
+# Default present so standalone `helm template` renders without nil pointer;
+# Olares overrides this at install time.
+olaresEnv:
+  HF_TOKEN: ""
 
 nodeSelector: {}
 tolerations: []
