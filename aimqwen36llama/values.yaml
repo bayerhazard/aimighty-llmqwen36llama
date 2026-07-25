@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/anbeeld/beellama.cpp
-  tag: server-cuda-preview-v0.3.2
+  tag: server-cuda-preview-v0.4.1
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -30,11 +30,9 @@ env:
   DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-IQ4_XS.gguf"
   KV_TYPE: "kvarn4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
-  THREADS: "12"
-  PARALLEL: "1"
-  CACHE_RAM: "0"
-
-runtimeClassName: nvidia
+  THREADS: "16"
+  PARALLEL: "2"
+  CACHE_RAM: "-1"
 
 nodeSelector: {}
 tolerations: []

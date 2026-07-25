@@ -103,12 +103,12 @@ spec:
               --alias "$MODEL_ALIAS" \
               --host 0.0.0.0 --port 8000 --no-host \
               -ngl all --spec-draft-ngl all \
-              --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-12}" \
-              --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
-              --cache-ram "${CACHE_RAM:-2048}" \
-              --ctx-checkpoints 8 \
-              --batch-size 2048 -ub 512 \
-              --parallel "${PARALLEL:-2}" --kv-unified \
+             --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
+               --cache-type-k "${KV_TYPE:-kvarn4}" --cache-type-v "${KV_TYPE:-kvarn4}" \
+               --cache-ram "${CACHE_RAM:-1}" \
+               --ctx-checkpoints 8 \
+               --batch-size 2048 -ub 512 \
+               --parallel "${PARALLEL:-2}" --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
               --reasoning on \
               --reasoning-budget 4096 \

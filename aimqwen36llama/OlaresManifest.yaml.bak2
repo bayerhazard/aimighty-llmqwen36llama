@@ -1,0 +1,75 @@
+---
+olaresManifest.version: '0.10.0'
+olaresManifest.type: app
+apiVersion: 'v1'
+metadata:
+  name: aimqwen36llama
+  icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+  description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
+  appid: aimqwen36llama
+  title: AIM Qwen3.6 27B Beellama
+  version: '2.4.0'
+  categories:
+    - AI
+    - Developer Tools
+sharedEntrances:
+  - name: aimqwen36llama
+    host: sharedentrances-aimqwen36llama
+    port: 0
+    title: AIM Qwen3.6 27B Beellama
+    invisible: true
+    authLevel: internal
+    icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+entrances:
+  - name: aimqwen36llama
+    port: 8000
+    host: aimqwen36llama
+    title: AIM Qwen3.6 27B Beellama
+    icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
+    openMethod: window
+    authLevel: internal
+spec:
+  requiredCpu: 4
+  limitedCpu: 16
+  requiredMemory: 24Gi
+  limitedMemory: 40Gi
+  requiredDisk: 25Gi
+versionName: '2.4.0'
+upgradeDescription: |
+  v2.4.0: HAMi GPU allocation fix — removed runtimeClassName: nvidia (bypassed HAMi, caused "No compatible compute resources" error). beellama.cpp v0.3.2 → v0.4.1 (native KVarN + DFlash CUDA kernels, reduced checkpoint stalls). Threads 12→16, cache-ram 0→-1 (prompt cache reaktiviert), parallel 1→2 (2x throughput). v2.3.3: Revert --parallel 2→1, --cache-ram 2048→0 (prompt cache aus — OOM-Risiko bei 2x 200k). Völlig sauberes Release: Basierend auf stabilem v2.3.0 (check-auth command:["true"]), nur ConfigMap-Werte geändert. v2.3.0: Fix Olares Webhook compat — check-auth init container uses `command: ["true"]` so the app-service webhook (patches image+args) can't break startup. Webhook aus v2.2.2 restored.
+  v1.7.6: --reasoning off → on zurück (Qualität). Subagenten nutzen Gemma statt Qwen für Tool-Calls (via OpenCode Config). v1.7.5: (übersprungen). v1.7.4: Reasoning-Budget 1024 → 512. v1.7.3: Fix --reasoning-loop-min-coverage 384 → 256 (gleicher Wert wie loop-min-tokens, behebt CrashLoop). v1.7.2: Updated store description (Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV). v1.7.1: Reasoning-Budget 4096 → 1024, Reasoning-Loop-Min-Tokens 512 → 256 (reduziert Reasoning-Overhead bei Tool-Calling). v1.7.0: Prompt-Cache reaktiviert (--cache-ram -1, --cache-reuse 256), temp 0.3 → 0.6, ctx-checkpoints 8 → 4, threads 16 (hardcodiert). v1.6.9: Renamed to AIM Qwen3.6 27B Beellama. Parameter-Optimierung: temp 0.6 → 0.3, Reasoning-Budget 4096 gesetzt, Threads 16 → 12. v1.6.5: Fix Olares chartrepo compat — base64 chat template. v1.6.4: Fix Olares chartrepo compatibility — inline chat template in values.yaml instead of .Files.Get. v1.6.3: Version bump to force Olares re-sync. v1.6.2: Version bump to sync with Olares. Added base64 decoding of chat template before use. Increased ctx-checkpoints to 32. v1.6.0: Gist-Template (custom_pub_chat_template_qwen36) mit 6 agentic Patches — Q1: preserve_thinking=true (multi-turn tool args stabilisiert), Q2: developer role akzeptiert, Q3: string tool_call.arguments error handling, Q4: robuste
+  fullDescription: |
+    Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash IQ4_XS - kvarn4 KV
+
+    Optimized for coding and agentic workflows on Olares One.
+
+    Features:
+    - beellama.cpp-server-cuda-preview-v0.4.1
+    - Unsloth Qwen3.6-27-UD-Q4_K_XL
+    - DFlash speculative decoding with IQ4_XS drafter
+    - kvarn4 KV cache (4-bit, ~17 KB/token)
+    - 200K token context with prompt cache
+    - parallel 2 (2x throughput)
+    - space-invaders 110 t/s, creative-poem 65.6 t/s
+    - OpenAI-compatible API at port 8000
+  developer: Aimighty
+  website: https://github.com/bayerhazard/aimighty-llmqwen36llama
+  sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
+  locale:
+    - en-US
+  supportArch:
+    - amd64
+  requiredCpu: 4
+  requiredMemory: 24Gi
+  limitedCpu: 16
+  limitedMemory: 40Gi
+  requiredDisk: 25Gi
+  requiredGpu: 1
+permission:
+  appData: true
+options:
+  dependencies:
+    - name: olares
+      version: '>=1.12.3-0'
+      type: system
+  allowMultipleInstall: false
