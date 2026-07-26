@@ -106,6 +106,7 @@ spec:
               -ngl 99 --spec-draft-ngl 99 \
              --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
                --cache-type-k "${KV_TYPE:-q4_0}" --cache-type-v "${KV_TYPE:-q4_0}" \
+               --kv-tail-tokens "${KV_TAIL_TOKENS:-4096}" --kv-tail-type "${KV_TAIL_TYPE:-f16}" \
                --cache-ram "${CACHE_RAM:--1}" \
                --ctx-checkpoints 8 \
                --batch-size 2048 -ub 512 \
