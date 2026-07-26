@@ -17,5 +17,3 @@ data:
   THREADS: "{{ .Values.env.THREADS }}"
   PARALLEL: "{{ .Values.env.PARALLEL }}"
   CACHE_RAM: "{{ .Values.env.CACHE_RAM }}"
-  KV_TAIL_TOKENS: "{{ .Values.env.KV_TAIL_TOKENS }}"
-  KV_TAIL_TYPE: "{{ .Values.env.KV_TAIL_TYPE }}"
