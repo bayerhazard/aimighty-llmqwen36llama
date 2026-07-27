@@ -1,6 +1,6 @@
 apiVersion: v2
 name: aimqwen36llama
-description: Qwen3.6-27B beellama - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV
+description: Qwen3.6-27B beellama (Aimighty) - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV - Vision
 type: application
-version: 2.6.0
-appVersion: "2.6.0"
+version: 1.4.0
+appVersion: "1.4.0"

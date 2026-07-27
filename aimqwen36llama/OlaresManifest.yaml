@@ -8,10 +8,10 @@ workloadReplicas:
 metadata:
   name: aimqwen36llama
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
-  description: Qwen3.6-27B beellama - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV
+  description: Qwen3.6-27B beellama (Aimighty) - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV - Vision
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '2.6.0'
+  version: '1.4.0'
   categories:
     - AI
     - Developer Tools
@@ -26,24 +26,45 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '2.6.0'
+  versionName: '1.4.0'
   fullDescription: |
-    Qwen3.6-27B beellama - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV
+    Qwen3.6-27B beellama (Aimighty) — UD-Q3_K_XL + Spiritbuun DFlash + turbo3 KV + Vision
 
-    Optimized for coding and agentic workflows on Olares One.
+    Optimized for coding and agentic workflows on Olares One. Based on the proven
+    aamsellem/beellama-cpp:0.1.3-rc1 image (custom sm_120 Blackwell build).
 
-    Features:
-    - aamsellem/beellama-cpp:0.1.3-rc1 (custom sm_120 build for RTX 5090)
-    - Unsloth Qwen3.6-27B UD-Q3_K_XL (14.5 GB, non-MTP)
-    - Spiritbuun DFlash Q4_K_M drafter (1 GB)
-    - turbo3 KV cache (3-bit Walsh-Hadamard, scales linearly with context)
-    - Vision encoder (mmproj-F16, CPU offload)
-    - DFlash with --spec-dflash-cross-ctx 1024
-    - 200K token context with prompt cache
-    - batch 2048, ubatch 2048
-    - OpenAI-compatible API at port 8000
+    **Model:** unsloth/Qwen3.6-27B-UD-Q3_K_XL (14.5 GB, non-MTP variant)
+    **Draft:** spiritbuun/Qwen3.6-27B-DFlash-GGUF dflash-draft-3.6-q4_k_m (1 GB)
+    **Engine:** aamsellem/beellama-cpp:0.1.3-rc1 — custom Blackwell sm_120 build
+    **KV Cache:** turbo3 (3-bit Walsh-Hadamard rotated, scales linearly with context)
+    **Vision:** mmproj-F16-27B.gguf with CPU offload (--no-mmproj-offload)
+    **Speculation:** DFlash with --spec-dflash-cross-ctx 1024
+    **Context:** 200K tokens with prompt cache (--cache-ram -1)
+    **Batch:** 2048 / 2048 (equal)
+    **Chat Template:** Custom agentic Jinja2 template (multi-turn tool-call fix,
+      developer role support, robust reasoning handling)
+    **API:** OpenAI-compatible at port 8000 (/v1/chat/completions, /health)
+
+    **Performance (RTX 5090 Blackwell, 24 GiB, 200k ctx):**
+    - Warm prompt: ~125 t/s
+    - Text generation: ~44-61 t/s
+    - VRAM: ~21 GB (86%) — stable with headroom for long generations
+    - Vision encoder active (clip, CPU offload)
   upgradeDescription: |
-    v2.6.0: Foundation-Update — Image auf aamsellem/beellama-cpp:0.1.3-rc1 (custom Blackwell sm_120 Build mit TurboQuant FA-Kompilation). Target auf unsloth Q3_K_XL (14.5 GB, non-MTP, ~3 GB weniger VRAM als Q4_K_XL). Draft auf spiritbuun dflash-draft-3.6-q4_k_m (altes Format, kompatibel mit alten dflash Spec-Type). KV von q4_0 auf turbo3 (Walsh-Hadamard 3-bit, ~30% weniger VRAM). Spec-Type von draft-dflash auf dflash --spec-dflash-cross-ctx 1024 (ursprüngliche fork-eigene DFlash-API). Vision mmproj mit CPU-Offload hinzugefügt. Reasoning-Komplexität reduziert (reasoning off statt reasoning-loop-guard). Veraltete v0.4.x-Workarounds entfernt (--fit off bleibt für n_gpu_layers-Abort-Schutz).
+    v1.4.0: Foundation-Release — Neuaufbau des Stacks auf Basis des bewährten
+    aamsellem/beellama-cpp:0.1.3-rc1 Image (custom sm_120 Blackwell-Build).
+    OlaresManifest auf API-Version v3 migriert.
+
+    **Änderungen gegenüber v2.x:**
+    - Image: aamsellem/beellama-cpp:0.1.3-rc1 (custom Blackwell sm_120 + CUDA 13)
+    - Target: unsloth Q3_K_XL (14.5 GB, non-MTP, ~3 GB weniger VRAM als Q4_K_XL)
+    - Draft: spiritbuun dflash-draft-3.6-q4_k_m (kompatibel mit legacy dflash)
+    - KV Cache: turbo3 (3-bit Walsh-Hadamard, ~30% weniger VRAM als q4_0)
+    - Spec-Type: dflash + --spec-dflash-cross-ctx 1024 (legacy DFlash-API, stabil)
+    - Vision: mmproj-F16 mit CPU-Offload (--no-mmproj-offload)
+    - Reasoning: off (agent-optimized)
+    - Keine v0.4.x-Workarounds mehr nötig (KVarN-Rollback-Bug vermieden)
+    - ~21 GB VRAM (86%) — stabil mit Headroom für lange Generationen
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen36llama
   sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
