@@ -14,6 +14,8 @@ data:
   DRAFT_URL: "{{ .Values.env.DRAFT_URL }}"
   KV_TYPE: "{{ .Values.env.KV_TYPE }}"
   MODEL_ALIAS: "{{ .Values.env.MODEL_ALIAS }}"
+  MMPROJ_FILE: "{{ .Values.env.MMPROJ_FILE }}"
+  MMPROJ_URL: "{{ .Values.env.MMPROJ_URL }}"
   THREADS: "{{ .Values.env.THREADS }}"
   PARALLEL: "{{ .Values.env.PARALLEL }}"
   CACHE_RAM: "{{ .Values.env.CACHE_RAM }}"

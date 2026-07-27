@@ -8,10 +8,10 @@ workloadReplicas:
 metadata:
   name: aimqwen36llama
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
-  description: Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash Q4_K_M - q4_0 KV
+  description: Qwen3.6-27B beellama - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '2.5.1'
+  version: '2.6.0'
   categories:
     - AI
     - Developer Tools
@@ -26,22 +26,24 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '2.5.1'
+  versionName: '2.6.0'
   fullDescription: |
-    Qwen3.6-27B beellama - UD-Q4_K_XL - DFlash Q4_K_M - q4_0 KV
+    Qwen3.6-27B beellama - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV
 
     Optimized for coding and agentic workflows on Olares One.
 
     Features:
-    - beellama.cpp server-cuda-preview-v0.4.1 (upstream draft-dflash)
-    - Unsloth Qwen3.6-27B UD-Q4_K_XL (17.6 GB)
-    - DFlash speculative decoding with Q4_K_M drafter (1 GB)
-    - q4_0 KV cache (kvarn4 currently incompatible with draft-dflash)
+    - aamsellem/beellama-cpp:0.1.3-rc1 (custom sm_120 build for RTX 5090)
+    - Unsloth Qwen3.6-27B UD-Q3_K_XL (14.5 GB, non-MTP)
+    - Spiritbuun DFlash Q4_K_M drafter (1 GB)
+    - turbo3 KV cache (3-bit Walsh-Hadamard, scales linearly with context)
+    - Vision encoder (mmproj-F16, CPU offload)
+    - DFlash with --spec-dflash-cross-ctx 1024
     - 200K token context with prompt cache
-    - parallel 1 (draft-dflash multi-slot workaround)
+    - batch 2048, ubatch 2048
     - OpenAI-compatible API at port 8000
   upgradeDescription: |
-    v2.5.1: Runtime-Fixes nach Live-Debugging — CUDA_DEVICE_MEMORY_LIMIT_0=30000m (HAMi capped cudaMalloc sonst → OOM), parallel 2→1 (v0.4.1 draft-dflash multi-slot Bug: vector::_M_range_check bei slot[1]), KV kvarn4→q4_0 (kvarn+dflash = "internal prompt-cache rollback failure" bei jedem Request, beellama issue #93), --fit off (Fitter-Abort bei gepinntem -ngl). DFlash Acceptance 100% (26/26), q4_0 Boot 22s. v2.5.0: Fix beellama v0.4.x compat — --spec-type draft-dflash, fork-private --spec-dflash-cross-ctx entfernt. Fix OlaresManifest v3 Struktur (fullDescription/versionName unter spec:). Fix values.yaml olaresEnv Default (helm nil pointer). DFlash-Drafter IQ4_XS → Q4_K_M. apiTimeout 3600. v2.4.0: beellama.cpp v0.3.2 → v0.4.1. HAMi GPU fix — runtimeClassName: nvidia entfernt. v2.3.3: parallel 2→1, cache-ram→0 (OOM). v2.3.0: check-auth command:["true"] (Webhook compat). v1.7.x: Reasoning-Parameter-Serie. v1.6.x: chartrepo compat (inline base64 chat template). v1.3.x: kvarn4 KV, OOM-Fixes, self-contained chart.
+    v2.6.0: Foundation-Update — Image auf aamsellem/beellama-cpp:0.1.3-rc1 (custom Blackwell sm_120 Build mit TurboQuant FA-Kompilation). Target auf unsloth Q3_K_XL (14.5 GB, non-MTP, ~3 GB weniger VRAM als Q4_K_XL). Draft auf spiritbuun dflash-draft-3.6-q4_k_m (altes Format, kompatibel mit alten dflash Spec-Type). KV von q4_0 auf turbo3 (Walsh-Hadamard 3-bit, ~30% weniger VRAM). Spec-Type von draft-dflash auf dflash --spec-dflash-cross-ctx 1024 (ursprüngliche fork-eigene DFlash-API). Vision mmproj mit CPU-Offload hinzugefügt. Reasoning-Komplexität reduziert (reasoning off statt reasoning-loop-guard). Veraltete v0.4.x-Workarounds entfernt (--fit off bleibt für n_gpu_layers-Abort-Schutz).
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen36llama
   sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama

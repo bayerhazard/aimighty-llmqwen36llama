@@ -5,8 +5,8 @@ workloads:
     replicaCount: 1
 
 image:
-  repository: ghcr.io/anbeeld/beellama.cpp
-  tag: server-cuda-preview-v0.4.1
+  repository: docker.io/aamsellem/beellama-cpp
+  tag: 0.1.3-rc1
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -28,11 +28,13 @@ resources:
 
 env:
   CTX_SIZE: "200000"
-  TARGET_FILE: "Qwen3.6-27B-UD-Q4_K_XL.gguf"
-  TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q4_K_XL.gguf"
-  DRAFT_FILE: "Qwen3.6-27B-DFlash-Q4_K_M.gguf"
-  DRAFT_URL: "https://huggingface.co/Anbeeld/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-Q4_K_M.gguf"
-  KV_TYPE: "q4_0"
+  TARGET_FILE: "Qwen3.6-27B-UD-Q3_K_XL.gguf"
+  TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q3_K_XL.gguf"
+  DRAFT_FILE: "dflash-draft-3.6-q4_k_m.gguf"
+  DRAFT_URL: "https://huggingface.co/spiritbuun/Qwen3.6-27B-DFlash-GGUF/resolve/main/dflash-draft-3.6-q4_k_m.gguf"
+  MMPROJ_FILE: "mmproj-F16-27B.gguf"
+  MMPROJ_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF/resolve/main/mmproj-F16.gguf"
+  KV_TYPE: "turbo3"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
   THREADS: "16"
   PARALLEL: "1"
