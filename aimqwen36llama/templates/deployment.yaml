@@ -108,7 +108,7 @@ spec:
             exec ./llama-server \
               --model "$SHARED_DIR/$TARGET_FILE" \
               --spec-draft-model "$SHARED_DIR/$DRAFT_FILE" \
-              --spec-type dflash --spec-dflash-cross-ctx 1024 \
+              --spec-type dflash --spec-dflash-cross-ctx 2048 \
               $MMPROJ_ARG \
               --fit off \
               --alias "$MODEL_ALIAS" \
@@ -117,7 +117,7 @@ spec:
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
               --cache-type-k "${KV_TYPE:-turbo4}" --cache-type-v "${KV_TYPE:-turbo4}" \
               --cache-ram "${CACHE_RAM:--1}" \
-              --ctx-checkpoints 4 \
+              --ctx-checkpoints 8 \
               --batch-size 2048 --ubatch-size 512 \
               --parallel "${PARALLEL:-1}" --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja \

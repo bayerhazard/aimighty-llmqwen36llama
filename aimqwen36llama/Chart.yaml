@@ -2,5 +2,5 @@ apiVersion: v2
 name: aimqwen36llama
 description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo3 KV - Vision
 type: application
-version: 1.4.3
-appVersion: "1.4.3"
+version: 1.4.4
+appVersion: "1.4.4"

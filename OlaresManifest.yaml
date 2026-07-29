@@ -51,6 +51,15 @@ spec:
     - VRAM: ~21.6 GB (88%) — ~2.5 GB headroom, stable
     - Vision encoder on GPU (clip, verified)
   upgradeDescription: |
+    v1.4.4: Agentic/Coding-Tuning — DFlash cross-ctx 1024→2048, ctx-checkpoints 4→8.
+
+    **Änderungen gegenüber v1.4.3:**
+    - --spec-dflash-cross-ctx 1024 → 2048 (längerer Draft-Kontext → Ziel: höhere
+      Token-Acceptance bei strukturiertem Code; Baseline v1.4.3: 37.8%)
+    - --ctx-checkpoints 4 → 8 (schnellere KV-Rollbacks bei Multi-Turn Agentic-Loops)
+    - Verifikation post-install gegen v1.4.3-Baseline (Decode ~90 t/s, Acc 37.8%,
+      VRAM 21.6 GB); bei Regression Rückbau als v1.4.5
+
     v1.4.3: turbo3 → turbo4 KV-Cache (4-bit statt 3-bit) + Vision auf GPU.
 
     **Änderungen gegenüber v1.4.2 (live vermessen, RTX 5090 24 GiB, 200k ctx):**
