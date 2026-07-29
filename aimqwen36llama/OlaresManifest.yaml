@@ -8,10 +8,10 @@ workloadReplicas:
 metadata:
   name: aimqwen36llama
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
-  description: Qwen3.6-27B beellama (Aimighty) - UD-Q3_K_XL - Spiritbuun DFlash - turbo3 KV - Vision
+  description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo4 KV - Vision (GPU)
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '1.4.0'
+  version: '1.4.3'
   categories:
     - AI
     - Developer Tools
@@ -26,45 +26,63 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '1.4.0'
+  versionName: '1.4.3'
   fullDescription: |
-    Qwen3.6-27B beellama (Aimighty) — UD-Q3_K_XL + Spiritbuun DFlash + turbo3 KV + Vision
+    Qwen3.6-27B beellama (Aimighty) — UD-Q4_K_XL + Ardenzard IQ4_XS DFlash + turbo4 KV + Vision (GPU)
 
     Optimized for coding and agentic workflows on Olares One. Based on the proven
     aamsellem/beellama-cpp:0.1.3-rc1 image (custom sm_120 Blackwell build).
 
-    **Model:** unsloth/Qwen3.6-27B-UD-Q3_K_XL (14.5 GB, non-MTP variant)
-    **Draft:** spiritbuun/Qwen3.6-27B-DFlash-GGUF dflash-draft-3.6-q4_k_m (1 GB)
+    **Model:** unsloth/Qwen3.6-27B-UD-Q4_K_XL (17.6 GB, non-MTP variant)
+    **Draft:** Ardenzard/Qwen3.6-27B-DFlash-GGUF IQ4_XS (892 MB)
     **Engine:** aamsellem/beellama-cpp:0.1.3-rc1 — custom Blackwell sm_120 build
-    **KV Cache:** turbo3 (3-bit Walsh-Hadamard rotated, scales linearly with context)
-    **Vision:** mmproj-F16-27B.gguf with CPU offload (--no-mmproj-offload)
+    **KV Cache:** turbo4 (4-bit Walsh-Hadamard rotated; 16.5 KB/token @ 200k = 3.2 GB)
+    **Vision:** mmproj-F16-27B.gguf on GPU
     **Speculation:** DFlash with --spec-dflash-cross-ctx 1024
     **Context:** 200K tokens with prompt cache (--cache-ram -1)
-    **Batch:** 2048 / 2048 (equal)
+    **Batch:** 2048 / 512 (processing-optimized)
     **Chat Template:** Custom agentic Jinja2 template (multi-turn tool-call fix,
-      developer role support, robust reasoning handling)
+      developer role support, robust reasoning handling, think-disabled)
     **API:** OpenAI-compatible at port 8000 (/v1/chat/completions, /health)
 
-    **Performance (RTX 5090 Blackwell, 24 GiB, 200k ctx):**
-    - Warm prompt: ~125 t/s
-    - Text generation: ~44-61 t/s
-    - VRAM: ~21 GB (86%) — stable with headroom for long generations
-    - Vision encoder active (clip, CPU offload)
+    **Performance (RTX 5090 Blackwell, 24 GiB, 200k ctx, turbo4, live measured):**
+    - Decode: ~90 t/s warm (Coding, 512 tok runs)
+    - DFlash token acceptance: 37.8%
+    - Prefill: ~1.150-1.185 t/s (21k prompt, cold)
+    - VRAM: ~21.6 GB (88%) — ~2.5 GB headroom, stable
+    - Vision encoder on GPU (clip, verified)
   upgradeDescription: |
-    v1.4.0: Foundation-Release — Neuaufbau des Stacks auf Basis des bewährten
-    aamsellem/beellama-cpp:0.1.3-rc1 Image (custom sm_120 Blackwell-Build).
-    OlaresManifest auf API-Version v3 migriert.
+    v1.4.3: turbo3 → turbo4 KV-Cache (4-bit statt 3-bit) + Vision auf GPU.
 
-    **Änderungen gegenüber v2.x:**
-    - Image: aamsellem/beellama-cpp:0.1.3-rc1 (custom Blackwell sm_120 + CUDA 13)
-    - Target: unsloth Q3_K_XL (14.5 GB, non-MTP, ~3 GB weniger VRAM als Q4_K_XL)
-    - Draft: spiritbuun dflash-draft-3.6-q4_k_m (kompatibel mit legacy dflash)
-    - KV Cache: turbo3 (3-bit Walsh-Hadamard, ~30% weniger VRAM als q4_0)
-    - Spec-Type: dflash + --spec-dflash-cross-ctx 1024 (legacy DFlash-API, stabil)
-    - Vision: mmproj-F16 mit CPU-Offload (--no-mmproj-offload)
-    - Reasoning: off (agent-optimized)
-    - Keine v0.4.x-Workarounds mehr nötig (KVarN-Rollback-Bug vermieden)
-    - ~21 GB VRAM (86%) — stabil mit Headroom für lange Generationen
+    **Änderungen gegenüber v1.4.2 (live vermessen, RTX 5090 24 GiB, 200k ctx):**
+    - KV_TYPE: turbo3 → turbo4 (KV 2443.75 → 3225.75 MiB, 12.5 → 16.5 KB/Token)
+    - DFlash Token-Acceptance: 33.9% → 37.8% (+4pp)
+    - Decode: ~86 → ~90 t/s (paritätisch, ±Messrauschen)
+    - Vision: mmproj-F16 jetzt auf GPU (--no-mmproj-offload entfernt), Bild-Encoding
+      deutlich schneller; Vision-Smoke verifiziert (64x64 PNG → korrekte Antwort)
+    - VRAM: 20.4 → 21.6 GB (~2.5 GB Headroom bleiben)
+    - Hinweis: ubatch 1024 wurde getestet und verworfen (Prefill 1139 vs 1185 t/s —
+      kein Gewinn, Engpass liegt nicht an der Micro-Batch)
+    - Hinweis: kvarn4 existiert im 0.1.3-rc1-Build nicht mehr; turbo4 ist die
+      4-bit-Option. issue #93 (kvarn+dflash Rollback) tritt mit turbo4 NICHT auf.
+
+    v1.4.2: Re-Release von v1.4.1 (identischer Inhalt) — erzwingt Re-Hydration
+    des Charts im chartrepo-Cache. Technisch unverändert zu v1.4.1.
+
+    v1.4.1: Optimierungen nach Benchmark-Durchlauf — Q3_K_XL → Q4_K_XL, IQ4_XS
+    DFlash, ubatch/ctx-checkpoints optimiert, chat-template-kwargs ergänzt.
+
+    **Änderungen gegenüber v1.4.0:**
+    - Target: unsloth Q3_K_XL (14.5 GB) → unsloth Q4_K_XL (17.6 GB, höhere Qualität)
+    - Draft: spiritbuun Q4_K_M (1.03 GB) → Ardenzard IQ4_XS (892 MB, +19% t/s)
+    - --ubatch-size 2048 → 512 (VRAM-Optimierung für Processing-Buffer)
+    - --ctx-checkpoints 8 → 4 (minimaler VRAM-Gewinn)
+    - --chat-template-kwargs '{"enable_thinking":false}' (Template-Level Think-Deaktivierung,
+      vermeidet DFlash-Qualitätseinbruch durch Think-Tokens)
+    - VRAM: 20.4 GB (83%) — 4 GB Headroom, auch bei 200k Kontext stabil
+    - Code-Generation: 213 t/s (Q3_K_XL: 244 t/s, geringer Einbruch durch größeres Target)
+    - Poetry-Generation: 44 t/s (unverändert)
+    - Q4_K_XL + IQ4_XS + 2000-tok Stresstest bestanden (stabil)
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen36llama
   sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama

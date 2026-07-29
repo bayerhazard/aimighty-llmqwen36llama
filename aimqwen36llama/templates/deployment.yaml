@@ -77,7 +77,7 @@ spec:
               touch "$SHARED_DIR/$TARGET_FILE.ok"
             fi
             if [ ! -f "$SHARED_DIR/$TARGET_FILE.ok" ]; then
-              echo "==> Downloading target $TARGET_FILE (~15 GB)"
+              echo "==> Downloading target $TARGET_FILE (~18 GB)"
               eval curl -fL -C - --retry 20 --retry-delay 15 --retry-all-errors --connect-timeout 30 $HF_AUTH \
                 "$TARGET_URL" -o "$SHARED_DIR/$TARGET_FILE"
               touch "$SHARED_DIR/$TARGET_FILE.ok"
@@ -102,8 +102,8 @@ spec:
             base64 -d /chat-template/chat_template.b64 > /tmp/chat-template.jinja
             MMPROJ_ARG=""
             if [ -n "$MMPROJ_FILE" ] && [ -f "$SHARED_DIR/$MMPROJ_FILE" ]; then
-              MMPROJ_ARG="--mmproj $SHARED_DIR/$MMPROJ_FILE --no-mmproj-offload --image-min-tokens 1024"
-              echo "==> Vision enabled (CPU offload): mmproj=$MMPROJ_FILE"
+              MMPROJ_ARG="--mmproj $SHARED_DIR/$MMPROJ_FILE --image-min-tokens 1024"
+              echo "==> Vision enabled (GPU): mmproj=$MMPROJ_FILE"
             fi
             exec ./llama-server \
               --model "$SHARED_DIR/$TARGET_FILE" \
@@ -115,12 +115,13 @@ spec:
               --host 0.0.0.0 --port 8000 --no-host \
               -ngl 99 --spec-draft-ngl 99 \
               --ctx-size "${CTX_SIZE:-200000}" --threads "${THREADS:-16}" \
-              --cache-type-k "${KV_TYPE:-turbo3}" --cache-type-v "${KV_TYPE:-turbo3}" \
+              --cache-type-k "${KV_TYPE:-turbo4}" --cache-type-v "${KV_TYPE:-turbo4}" \
               --cache-ram "${CACHE_RAM:--1}" \
-              --ctx-checkpoints 8 \
-              --batch-size 2048 --ubatch-size 2048 \
+              --ctx-checkpoints 4 \
+              --batch-size 2048 --ubatch-size 512 \
               --parallel "${PARALLEL:-1}" --kv-unified \
-              --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja --no-mmap --mlock \
+              --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja \
+              --chat-template-kwargs '{"enable_thinking":false}' --no-mmap --mlock \
               --reasoning off \
               --temp 0.6 --top-k 20 --top-p 0.95 --min-p 0.0
         env:

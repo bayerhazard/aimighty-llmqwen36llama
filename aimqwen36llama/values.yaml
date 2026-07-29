@@ -28,13 +28,13 @@ resources:
 
 env:
   CTX_SIZE: "200000"
-  TARGET_FILE: "Qwen3.6-27B-UD-Q3_K_XL.gguf"
-  TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q3_K_XL.gguf"
-  DRAFT_FILE: "dflash-draft-3.6-q4_k_m.gguf"
-  DRAFT_URL: "https://huggingface.co/spiritbuun/Qwen3.6-27B-DFlash-GGUF/resolve/main/dflash-draft-3.6-q4_k_m.gguf"
+  TARGET_FILE: "Qwen3.6-27B-UD-Q4_K_XL.gguf"
+  TARGET_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-GGUF/resolve/main/Qwen3.6-27B-UD-Q4_K_XL.gguf"
+  DRAFT_FILE: "dflash-draft-3.6-iq4_xs.gguf"
+  DRAFT_URL: "https://huggingface.co/Ardenzard/Qwen3.6-27B-DFlash-GGUF/resolve/main/Qwen3.6-27B-DFlash-IQ4_XS.gguf"
   MMPROJ_FILE: "mmproj-F16-27B.gguf"
   MMPROJ_URL: "https://huggingface.co/unsloth/Qwen3.6-27B-MTP-GGUF/resolve/main/mmproj-F16.gguf"
-  KV_TYPE: "turbo3"
+  KV_TYPE: "turbo4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
   THREADS: "16"
   PARALLEL: "1"
