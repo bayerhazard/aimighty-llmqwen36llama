@@ -11,7 +11,7 @@ metadata:
   description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo4 KV - Vision (GPU)
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '1.5.0'
+  version: '3.2.4'
   categories:
     - AI
     - Developer Tools
@@ -26,7 +26,7 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '1.5.0'
+  versionName: '3.2.4'
   fullDescription: |
     AImighty HQ stack for Qwen3.6-27B optimized for coding and agentic workflows on Olares One.
 
