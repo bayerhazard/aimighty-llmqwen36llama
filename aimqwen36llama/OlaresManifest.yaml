@@ -11,7 +11,7 @@ metadata:
   description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo4 KV - Vision (GPU)
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '3.2.4'
+  version: '3.3.0'
   categories:
     - AI
     - Developer Tools
@@ -26,13 +26,13 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '3.2.4'
+  versionName: '3.3.0'
   fullDescription: |
     AImighty HQ stack for Qwen3.6-27B optimized for coding and agentic workflows on Olares One.
 
     **Model:** unsloth/Qwen3.6-27B-UD-Q4_K_XL
     **Draft:** Ardenzard/Qwen3.6-27B-DFlash-GGUF IQ4_XS
-    **Engine:** aamsellem/beellama-cpp:0.1.3-rc1 (custom Blackwell sm_120 build)
+    **Engine:** ghcr.io/anbeeld/beellama.cpp:server-cuda13-v0.3.1 (official build, native sm_120)
     **KV Cache:** turbo4 (4-bit Walsh-Hadamard rotated)
     **Vision:** mmproj-F16-27B.gguf on GPU
     **Speculation:** DFlash with --spec-dflash-cross-ctx 1024
@@ -46,7 +46,15 @@ spec:
     - Performance Poetry: 40 t/s
     - Vision encoder on GPU
   upgradeDescription: |
-    Initial release of Qwen3.6-27B Beellama, the high quality stack for agentic workflows.
+    v3.3.0: Engine upgrade aamsellem 0.1.3-rc1 -> official beellama v0.3.1
+    (server-cuda13, native Blackwell sm_120). Fixes task-switch instability:
+    DFlash multi-slot crash fix (issue #24), adaptive draft-depth controller
+    now resets per-request state, stale drafter KV cleared before tool-call
+    continuations, fused TurboQuant FlashAttention repaired for turbo4.
+    --parallel 2 (unified KV) for task isolation: pausing task A and starting
+    task B no longer carries state between tasks. Rollback: reinstall 3.2.5.
+    Pairs with the LiteLLM expert (thinking off) / expert-thinking (thinking on)
+    endpoint split for agentic workflows.
   developer: Aimighty
   website: https://github.com/bayerhazard/aimighty-llmqwen36llama
   sourceCode: https://github.com/bayerhazard/aimighty-llmqwen36llama
