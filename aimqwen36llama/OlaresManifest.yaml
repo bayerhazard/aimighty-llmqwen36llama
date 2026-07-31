@@ -11,7 +11,7 @@ metadata:
   description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo4 KV - Vision (GPU)
   appid: aimqwen36llama
   title: AIM Qwen3.6 27B Beellama
-  version: '3.3.0'
+  version: '3.3.1'
   categories:
     - AI
     - Developer Tools
@@ -26,7 +26,7 @@ entrances:
     authLevel: internal
 
 spec:
-  versionName: '3.3.0'
+  versionName: '3.3.1'
   fullDescription: |
     AImighty HQ stack for Qwen3.6-27B optimized for coding and agentic workflows on Olares One.
 
@@ -46,6 +46,12 @@ spec:
     - Performance Poetry: 40 t/s
     - Vision encoder on GPU
   upgradeDescription: |
+    v3.3.1: Stability fix for HAMi GPU OOM restarts. The adaptive draft-depth
+    controller (adaptive dm profit) dynamically reallocates GPU memory at
+    94% VRAM and overflowed HAMi's allocator (UINT64_MAX OOM) after ~1h runtime.
+    Fix: --no-spec-dm-adaptive --spec-draft-n-max 8 (fixed draft depth, no dynamic
+    reallocations). Acceptance tradeoff negligible (first 8 draft tokens carry
+    ~80% of acceptance). Decode/VRAM unchanged.
     v3.3.0: Engine upgrade aamsellem 0.1.3-rc1 -> official beellama v0.3.1
     (server-cuda13, native Blackwell sm_120). Fixes task-switch instability:
     DFlash multi-slot crash fix (issue #24), adaptive draft-depth controller

@@ -39,6 +39,8 @@ env:
   THREADS: "16"
   PARALLEL: "2"
   CACHE_RAM: "-1"
+  SPEC_DM_ADAPTIVE: "off"
+  SPEC_DRAFT_N_MAX: "8"
 
 # Olares-injected environment variables (from OlaresManifest envs:).
 # Default present so standalone `helm template` renders without nil pointer;
