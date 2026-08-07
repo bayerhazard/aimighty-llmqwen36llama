@@ -8,25 +8,25 @@ workloadReplicas:
 metadata:
   name: aimqwen36llama
   icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
-  description: Qwen3.6-27B beellama (Aimighty) - UD-Q4_K_XL - Ardenzard IQ4_XS DFlash - turbo4 KV - Vision (GPU)
+  description: Qwen3.6-27B chat via beellama (llama.cpp) — 200K context, vision, DFlash, turbo4 KV
   appid: aimqwen36llama
-  title: AIM Qwen3.6 27B Beellama
-  version: '3.3.1'
+  title: AIM Qwen3.6 27B
+  version: '26.08.1'
   categories:
     - AI
-    - Developer Tools
+    - Vision
 
 entrances:
   - name: aimqwen36llama
     port: 8000
     host: aimqwen36llama
-    title: AIM Qwen3.6 27B Beellama
+    title: AIM Qwen3.6 27B
     icon: https://raw.githubusercontent.com/bayerhazard/aimighty-llmqwen36llama/main/icon.png
     openMethod: window
     authLevel: internal
 
 spec:
-  versionName: '3.3.1'
+  versionName: '26.08.1'
   fullDescription: |
     AImighty HQ stack for Qwen3.6-27B optimized for coding and agentic workflows on Olares One.
 

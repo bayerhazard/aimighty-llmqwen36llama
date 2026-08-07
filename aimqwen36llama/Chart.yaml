@@ -1,6 +1,6 @@
 apiVersion: v2
-appVersion: 3.3.1
-description: Qwen3.6-27B Beellama - UD-Q4_K_XL - Ardenzard DFlash - Turbo4 - Vision
+appVersion: 26.08.1
+description: Qwen3.6-27B chat via beellama (llama.cpp) — 200K context, vision, DFlash, turbo4 KV
 name: aimqwen36llama
 type: application
-version: 3.3.1
+version: 26.08.1

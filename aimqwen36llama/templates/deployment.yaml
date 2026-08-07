@@ -105,15 +105,11 @@ spec:
               MMPROJ_ARG="--mmproj $SHARED_DIR/$MMPROJ_FILE --image-min-tokens 1024"
               echo "==> Vision enabled (GPU): mmproj=$MMPROJ_FILE"
             fi
-            SPEC_DM_ARGS=""
-            if [ "${SPEC_DM_ADAPTIVE:-off}" = "off" ]; then
-              SPEC_DM_ARGS="--no-spec-dm-adaptive --spec-draft-n-max ${SPEC_DRAFT_N_MAX:-8}"
-            fi
             exec ./llama-server \
               --model "$SHARED_DIR/$TARGET_FILE" \
               --spec-draft-model "$SHARED_DIR/$DRAFT_FILE" \
               --spec-type dflash --spec-dflash-cross-ctx 1024 \
-              $MMPROJ_ARG $SPEC_DM_ARGS \
+              $MMPROJ_ARG \
               --fit off \
               --alias "$MODEL_ALIAS" \
               --host 0.0.0.0 --port 8000 --no-host \
@@ -126,8 +122,7 @@ spec:
               --parallel "${PARALLEL:-1}" --kv-unified \
               --flash-attn on --jinja --chat-template-file /tmp/chat-template.jinja \
               --chat-template-kwargs '{"enable_thinking":true}' --no-mmap --mlock \
-              --reasoning on --reasoning-budget 8192 \
-              --reasoning-budget-message "Think done. Answer now." \
+              --reasoning on --reasoning-budget 2048 \
               --temp 0.6 --top-k 20 --top-p 0.95 --min-p 0.0
         env:
         - name: HF_HOME

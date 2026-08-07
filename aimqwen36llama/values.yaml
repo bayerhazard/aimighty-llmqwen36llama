@@ -5,8 +5,8 @@ workloads:
     replicaCount: 1
 
 image:
-  repository: ghcr.io/anbeeld/beellama.cpp
-  tag: server-cuda13-v0.3.1
+  repository: docker.io/aamsellem/beellama-cpp
+  tag: 0.1.3-rc1
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -37,10 +37,8 @@ env:
   KV_TYPE: "turbo4"
   MODEL_ALIAS: "qwen3.6-27b-beellama"
   THREADS: "16"
-  PARALLEL: "2"
+  PARALLEL: "1"
   CACHE_RAM: "-1"
-  SPEC_DM_ADAPTIVE: "off"
-  SPEC_DRAFT_N_MAX: "8"
 
 # Olares-injected environment variables (from OlaresManifest envs:).
 # Default present so standalone `helm template` renders without nil pointer;

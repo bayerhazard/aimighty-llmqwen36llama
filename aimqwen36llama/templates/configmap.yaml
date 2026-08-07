@@ -19,5 +19,3 @@ data:
   THREADS: "{{ .Values.env.THREADS }}"
   PARALLEL: "{{ .Values.env.PARALLEL }}"
   CACHE_RAM: "{{ .Values.env.CACHE_RAM }}"
-  SPEC_DM_ADAPTIVE: "{{ .Values.env.SPEC_DM_ADAPTIVE }}"
-  SPEC_DRAFT_N_MAX: "{{ .Values.env.SPEC_DRAFT_N_MAX }}"
